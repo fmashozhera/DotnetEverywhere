@@ -1,0 +1,58 @@
+@page "/convert/{From}/{To}"
+@rendermode InteractiveServer
+
+<div class="cc-page">
+    <div class="cc-header">
+        <div class="cc-header-top">
+            <div>
+                <h3>Currency Converter</h3>
+                <p class="cc-subtitle">Convert between currencies at live rates</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cc-converter-card">
+        <div class="cc-form-grid">
+            <div class="cc-input-group">
+                <label class="cc-label">From (@fromInput.ToUpper())</label>
+                <input class="cc-input cc-currency-input" type="text" maxlength="3"
+                       placeholder="USD" @bind="fromInput" @bind:event="oninput" />
+            </div>
+
+            <button class="cc-swap-btn" title="Swap currencies" @onclick="SwapCurrencies">&#8644;</button>
+
+            <div class="cc-input-group">
+                <label class="cc-label">To (@toInput.ToUpper())</label>
+                <input class="cc-input cc-currency-input" type="text" maxlength="3"
+                       placeholder="EUR" @bind="toInput" @bind:event="oninput" />
+            </div>
+
+            <div class="cc-input-group">
+                <label class="cc-label">Amount (@fromInput.ToUpper())</label>
+                <input class="cc-input" type="number" min="0" step="any" @bind="amount" @bind:event="oninput" />
+            </div>
+
+            <button class="cc-convert-btn" @onclick="Convert" disabled="@isLoading">
+                <span class="@(isLoading ? "cc-spinning" : "")">&#8635;</span>
+                @(isLoading ? "Converting..." : "Convert")
+            </button>
+        </div>
+    </div>
+
+    @if (convertResult != null && convertResult.Success)
+    {
+        <div class="cc-result-card">
+            <div class="cc-result-amount">
+                <span class="cc-result-from">@convertResult.Query?.Amount.ToString("N2") @fromInput.ToUpper()</span>
+                <span class="cc-result-equals">=</span>
+                <span class="cc-result-to">@convertResult.Result.ToString("N4") @toInput.ToUpper()</span>
+            </div>
+        </div>
+    }
+    else if (convertResult != null && !convertResult.Success)
+    {
+        <div class="cc-error">
+            Unable to retrieve conversion data. Please check the currencies and try again.
+        </div>
+    }
+</div>

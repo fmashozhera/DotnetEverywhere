@@ -1,0 +1,204 @@
+.cc-page {
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Header */
+.cc-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #3b82f6;
+}
+
+.cc-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.cc-header h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 0.25rem;
+    letter-spacing: -0.025em;
+}
+
+.cc-subtitle {
+    color: #475569;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Converter card */
+.cc-converter-card {
+    background: #ffffff;
+    border: 1px solid #93c5fd;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.1);
+    margin-bottom: 1.25rem;
+}
+
+/* Form grid */
+.cc-form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.75rem;
+}
+
+.cc-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+    min-width: 80px;
+}
+
+.cc-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #2563eb;
+}
+
+.cc-input {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid #93c5fd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0f172a;
+    background: #f8fafc;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cc-input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    background: #ffffff;
+}
+
+.cc-currency-input {
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 0.1em;
+    font-size: 1.1rem;
+    max-width: 100px;
+}
+
+/* Swap button */
+.cc-swap-btn {
+    font-size: 1.4rem;
+    background: #f1f5f9;
+    border: 1px solid #dbeafe;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #2563eb;
+    flex-shrink: 0;
+    align-self: flex-end;
+    margin-bottom: 2px;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.cc-swap-btn:hover {
+    background: #dbeafe;
+    transform: rotate(180deg);
+}
+
+/* Convert button */
+.cc-convert-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.25rem;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    align-self: flex-end;
+    transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.cc-convert-btn:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+.cc-convert-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@keyframes cc-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.cc-spinning {
+    display: inline-block;
+    animation: cc-spin 0.8s linear infinite;
+}
+
+/* Result card */
+.cc-result-card {
+    background: #1e3a8a;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 16px rgba(30, 58, 138, 0.2);
+}
+
+.cc-result-amount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.cc-result-from {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #bfdbfe;
+}
+
+.cc-result-equals {
+    font-size: 1.4rem;
+    color: #60a5fa;
+    font-weight: 300;
+}
+
+.cc-result-to {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+/* Error */
+.cc-error {
+    background: #fef2f2;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    color: #dc2626;
+    font-weight: 500;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,11 @@
+<tr>
+    <td>@BaseCurrency</td>
+    <td>@TargetCurrency</td>
+    <td>@Rate</td>
+</tr>
+
+@code {
+    [Parameter] public string? BaseCurrency { get; set; }
+    [Parameter] public string? TargetCurrency { get; set; }
+    [Parameter] public Decimal Rate { get; set; }
+}

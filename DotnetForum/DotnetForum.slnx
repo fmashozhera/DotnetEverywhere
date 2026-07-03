@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Section 1/" />
+  <Folder Name="/Section 1/Blazor Web App/">
+    <Project Path="ExchangeRates/ExchangeRates.Client/ExchangeRates.Client.csproj" />
+    <Project Path="ExchangeRates/ExchangeRates/ExchangeRates.csproj" />
+  </Folder>
+  <Folder Name="/Section 2/">
+    <Project Path="BlazorWebAssemblyStandalone/BlazorWebAssemblyStandalone.csproj" />
+  </Folder>
+  <Folder Name="/Section 3/">
+    <Project Path="BlazorWebApp/BlazorWebApp.Client/BlazorWebApp.Client.csproj" />
+    <Project Path="BlazorWebApp/BlazorWebApp/BlazorWebApp.csproj" />
+  </Folder>
+</Solution>
