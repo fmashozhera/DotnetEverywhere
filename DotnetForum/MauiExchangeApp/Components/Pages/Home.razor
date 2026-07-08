@@ -1,0 +1,232 @@
+@page "/"
+@using System.Globalization
+
+<div class="converter-container">
+    <div class="converter-card">
+        <div class="card-header-gradient">
+            <div class="header-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm2 2v2h2V5zm3 0v2h4V5zm5 0v2h2V5zM3 8v2h2V8zm3 0v2h4V8zm5 0v2h2V8zM3 11v1h2v-1zm3 0v1h4v-1zm5 0v1h2v-1z"/>
+                </svg>
+            </div>
+            <div class="header-text">
+                <h2>Antigravity FX Converter</h2>
+                <p>Convert currencies with instant updates</p>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <!-- From Section -->
+            <div class="input-group-custom">
+                <label for="from-amount" class="input-label">From</label>
+                <div class="input-with-select">
+                    <input type="number" id="from-amount" class="amount-input" @bind="_fromAmount" @bind:event="oninput" @bind:after="() => UpdateConversion(true)" placeholder="Enter amount" />
+                    <select class="currency-select" value="@_fromCurrency" @onchange="OnFromCurrencyChange">
+                        @foreach (var cur in _currencies)
+                        {
+                            <option value="@cur.Code">@cur.Flag @cur.Code - @cur.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Swap Button Divider -->
+            <div class="swap-divider">
+                <button class="swap-btn" @onclick="SwapCurrencies" title="Swap currencies" aria-label="Swap currencies">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- To Section -->
+            <div class="input-group-custom">
+                <label for="to-amount" class="input-label">To</label>
+                <div class="input-with-select">
+                    <input type="number" id="to-amount" class="amount-input" @bind="_toAmount" @bind:event="oninput" @bind:after="() => UpdateConversion(false)" placeholder="Converted amount" />
+                    <select class="currency-select" value="@_toCurrency" @onchange="OnToCurrencyChange">
+                        @foreach (var cur in _currencies)
+                        {
+                            <option value="@cur.Code">@cur.Flag @cur.Code - @cur.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <!-- Rate Display & Info -->
+            <div class="rate-info-container">
+                <div class="rate-details">
+                    <div class="rate-line">
+                        <span class="rate-base">1 @_fromCurrency =</span>
+                        <span class="rate-value">@GetRateString(_fromCurrency, _toCurrency)</span>
+                    </div>
+                    <div class="rate-line reverse">
+                        <span class="rate-base">1 @_toCurrency =</span>
+                        <span class="rate-value">@GetRateString(_toCurrency, _fromCurrency)</span>
+                    </div>
+                </div>
+                <div class="timestamp">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                    </svg>
+                    <span>Simulated rates • Updated just now</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Exchange Rates Board -->
+    <div class="rates-board-card">
+        <h3>Exchange Rates Board</h3>
+        <p class="board-desc">Comparing 1 @_fromCurrency against popular world currencies:</p>
+        <div class="rates-grid">
+            @foreach (var cur in _currencies.Where(c => c.Code != _fromCurrency).Take(6))
+            {
+                <div class="rate-card" @onclick="() => SelectTargetCurrency(cur.Code)">
+                    <div class="rate-card-flag">@cur.Flag</div>
+                    <div class="rate-card-info">
+                        <span class="rate-card-code">@cur.Code</span>
+                        <span class="rate-card-name">@cur.Name</span>
+                    </div>
+                    <div class="rate-card-value">
+                        @GetRateString(_fromCurrency, cur.Code)
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private decimal _fromAmount = 100;
+    private decimal _toAmount;
+    private string _fromCurrency = "USD";
+    private string _toCurrency = "EUR";
+    private bool _isUpdating = false;
+
+    public class Currency
+    {
+        public string Code { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Flag { get; set; } = string.Empty;
+    }
+
+    private readonly List<Currency> _currencies = new()
+    {
+        new Currency { Code = "USD", Name = "US Dollar", Flag = "🇺🇸" },
+        new Currency { Code = "EUR", Name = "Euro", Flag = "🇪🇺" },
+        new Currency { Code = "GBP", Name = "British Pound", Flag = "🇬🇧" },
+        new Currency { Code = "CAD", Name = "Canadian Dollar", Flag = "🇨🇦" },
+        new Currency { Code = "AUD", Name = "Australian Dollar", Flag = "🇦🇺" },
+        new Currency { Code = "JPY", Name = "Japanese Yen", Flag = "🇯🇵" },
+        new Currency { Code = "INR", Name = "Indian Rupee", Flag = "🇮🇳" },
+        new Currency { Code = "ZAR", Name = "South African Rand", Flag = "🇿🇦" },
+        new Currency { Code = "CNY", Name = "Chinese Yuan", Flag = "🇨🇳" },
+        new Currency { Code = "CHF", Name = "Swiss Franc", Flag = "🇨🇭" },
+        new Currency { Code = "BRL", Name = "Brazilian Real", Flag = "🇧🇷" }
+    };
+
+    private readonly Dictionary<string, decimal> _usdBaseRates = new()
+    {
+        { "USD", 1.0000m },
+        { "EUR", 0.9220m },
+        { "GBP", 0.7812m },
+        { "CAD", 1.3645m },
+        { "AUD", 1.4925m },
+        { "JPY", 160.8500m },
+        { "INR", 83.4800m },
+        { "ZAR", 18.1500m },
+        { "CNY", 7.2720m },
+        { "CHF", 0.8945m },
+        { "BRL", 5.4180m }
+    };
+
+    protected override void OnInitialized()
+    {
+        UpdateConversion(true);
+    }
+
+    private void OnFromCurrencyChange(ChangeEventArgs e)
+    {
+        var val = e.Value?.ToString();
+        if (!string.IsNullOrEmpty(val))
+        {
+            _fromCurrency = val;
+            UpdateConversion(true);
+        }
+    }
+
+    private void OnToCurrencyChange(ChangeEventArgs e)
+    {
+        var val = e.Value?.ToString();
+        if (!string.IsNullOrEmpty(val))
+        {
+            _toCurrency = val;
+            UpdateConversion(true);
+        }
+    }
+
+    private void SwapCurrencies()
+    {
+        var tempCur = _fromCurrency;
+        _fromCurrency = _toCurrency;
+        _toCurrency = tempCur;
+
+        var tempAmt = _fromAmount;
+        _fromAmount = _toAmount;
+        _toAmount = tempAmt;
+
+        UpdateConversion(true);
+    }
+
+    private void SelectTargetCurrency(string code)
+    {
+        _toCurrency = code;
+        UpdateConversion(true);
+    }
+
+    private void UpdateConversion(bool fromTo)
+    {
+        if (_isUpdating) return;
+        _isUpdating = true;
+        try
+        {
+            if (!_usdBaseRates.TryGetValue(_fromCurrency, out var fromRate) || 
+                !_usdBaseRates.TryGetValue(_toCurrency, out var toRate))
+            {
+                return;
+            }
+
+            if (fromTo)
+            {
+                var amountInUsd = _fromAmount / fromRate;
+                _toAmount = Math.Round(amountInUsd * toRate, 4);
+            }
+            else
+            {
+                var amountInUsd = _toAmount / toRate;
+                _fromAmount = Math.Round(amountInUsd * fromRate, 4);
+            }
+        }
+        catch
+        {
+            // Fail-safe
+        }
+        finally
+        {
+            _isUpdating = false;
+        }
+    }
+
+    private string GetRateString(string from, string to)
+    {
+        if (_usdBaseRates.TryGetValue(from, out var fromRate) && 
+            _usdBaseRates.TryGetValue(to, out var toRate))
+        {
+            var rate = toRate / fromRate;
+            return $"{rate:N4} {to}";
+        }
+        return "N/A";
+    }
+}

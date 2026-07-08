@@ -1,0 +1,315 @@
+.converter-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+/* Card Styling */
+.converter-card {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.converter-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+.card-header-gradient {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #ffffff;
+}
+
+.header-icon {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.75rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-text h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.header-text p {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.85rem;
+    opacity: 0.85;
+}
+
+.card-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Custom Input Groups */
+.input-group-custom {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.input-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.input-with-select {
+    display: flex;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-with-select:focus-within {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.amount-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 1rem;
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 600;
+    width: 100%;
+}
+
+.amount-input:focus {
+    outline: none;
+}
+
+/* Remove default spin buttons for input number */
+.amount-input::-webkit-outer-spin-button,
+.amount-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.amount-input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.currency-select {
+    background: #111827;
+    border: none;
+    border-left: 1px solid #374151;
+    padding: 0 1.25rem;
+    color: #ffffff;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s ease;
+}
+
+.currency-select:hover {
+    background: #1c2533;
+}
+
+.currency-select option {
+    background: #111827;
+    color: #ffffff;
+    padding: 0.5rem;
+}
+
+/* Swap Button Divider */
+.swap-divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 1rem;
+}
+
+.swap-divider::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #374151;
+    z-index: 1;
+}
+
+.swap-btn {
+    position: relative;
+    z-index: 2;
+    background: #4f46e5;
+    border: 3px solid #111827;
+    color: #ffffff;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.swap-btn:hover {
+    background: #4338ca;
+    transform: rotate(180deg) scale(1.1);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+}
+
+.swap-btn:active {
+    transform: rotate(180deg) scale(0.95);
+}
+
+/* Rate details */
+.rate-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #1f2937;
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.rate-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.rate-line {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.rate-base {
+    color: #9ca3af;
+}
+
+.rate-value {
+    color: #ffffff;
+    font-weight: 700;
+    margin-left: 0.25rem;
+}
+
+.rate-line.reverse {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.timestamp {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+    font-size: 0.75rem;
+}
+
+.timestamp svg {
+    opacity: 0.7;
+}
+
+/* Quick Exchange Rates Board */
+.rates-board-card {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.rates-board-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.board-desc {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    margin: 0.5rem 0 1.5rem 0;
+}
+
+.rates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.rate-card {
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.rate-card:hover {
+    border-color: #6366f1;
+    background: #273142;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.rate-card-flag {
+    font-size: 1.5rem;
+}
+
+.rate-card-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.rate-card-code {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #ffffff;
+}
+
+.rate-card-name {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+.rate-card-value {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #10b981;
+}
+
+@media (max-width: 576px) {
+    .card-body {
+        padding: 1.25rem;
+    }
+    .rate-info-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

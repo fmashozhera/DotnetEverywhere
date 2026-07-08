@@ -11,4 +11,7 @@
     <Project Path="BlazorWebApp/BlazorWebApp.Client/BlazorWebApp.Client.csproj" />
     <Project Path="BlazorWebApp/BlazorWebApp/BlazorWebApp.csproj" />
   </Folder>
+  <Folder Name="/Section 4/">
+    <Project Path="MauiExchangeApp/MauiExchangeApp.csproj" />
+  </Folder>
 </Solution>
